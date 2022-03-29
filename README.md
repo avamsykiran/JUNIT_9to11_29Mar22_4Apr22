@@ -35,7 +35,7 @@ JUnit
 
     JUnit 5 Components
     ---------------------------------------
-        1. Testing API
-        2. Testing Engine
-        3. Vintage Support
-        4. Test Runner
+        1. Testing API          jupiter api
+        2. Testing Engine       junit-jupiter
+        3. Vintage Support      junit vintage
+        4. Test Runner          u=junit-eclispe-runner / surefire
