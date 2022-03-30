@@ -2,9 +2,14 @@ package com.cts.junitdemo.service;
 
 import java.time.LocalDateTime;
 
+import com.cts.junitdemo.exception.InvalidUserNameException;
+
 public class GreetingService {
 
-	public String greet(String userName) {
+	public String greet(String userName) throws InvalidUserNameException {
+		if(userName==null) {
+			throw new InvalidUserNameException("UserName can not be null");
+		}
 		return String.format("Hello %s!", userName);
 	}
 	
@@ -20,7 +25,10 @@ public class GreetingService {
 		return greeting;
 	}
 	
-	public String greetAsPerTime(String userName) {
+	public String greetAsPerTime(String userName) throws InvalidUserNameException {
+		if(userName==null) {
+			throw new InvalidUserNameException("UserName can not be null");
+		}
 		return String.format("%s %s!", getTimlyGreeting(),userName);
 	}
 }

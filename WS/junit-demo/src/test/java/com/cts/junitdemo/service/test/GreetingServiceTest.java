@@ -4,37 +4,72 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDateTime;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.cts.junitdemo.exception.InvalidUserNameException;
 import com.cts.junitdemo.service.GreetingService;
 
+@DisplayName("Test GreetService")
 public class GreetingServiceTest {
 	
-	@Test
-	void testGreet() {
-		//test data
-		String userName = "Vamsy";
-		//expected output
-		String expected = "Hello Vamsy!";
-		//actual output
-		String actual = (new GreetingService()).greet(userName);
-		
-		assertEquals(expected, actual);
+	GreetingService greetingService;
+	
+	@BeforeEach
+	void init() {
+		greetingService = new GreetingService();
 	}
 	
+	@AfterEach
+	void clean() {
+		greetingService = null;
+	}
+
 	@Test
-	void testGreetAsPerTime() {
-		String userName="Vamsy";
-		
-		int hour = LocalDateTime.now().getHour();
-		String greeting= "";
-		
-		if(hour>=3 && hour<=11) greeting="Good Morning";
-		else if(hour>=12 && hour<=17) greeting="Good Noon";
-		else greeting="Good Evening";
-		
-		String expected = greeting + " " + userName + "!";
-		String actual = (new GreetingService()).greetAsPerTime(userName);
+	@DisplayName("#greet should return 'Hello Vamsy' given 'Vamsy'")
+	void testGreet1() throws InvalidUserNameException {
+		String userName = "Vamsy";
+		String expected = "Hello Vamsy!";
+		String actual = greetingService.greet(userName);
 		assertEquals(expected, actual);
+	}
+
+	@Test
+	@DisplayName("#greet should throw InvalidUserNameException given null")
+	void testGreet2() {
+		String userName = null;
+		assertThrows(InvalidUserNameException.class, () -> {
+			greetingService.greet(userName);
+		});
+	}
+
+	@Test
+	@DisplayName("#greetAsPerTime should return time based greeting given a user name or should throw InvalidUserNameException")
+	void testGreetAsPerTime() throws InvalidUserNameException {
+		assertAll(() -> {
+			String userName = "Vamsy";
+
+			int hour = LocalDateTime.now().getHour();
+			String greeting = "";
+
+			if (hour >= 3 && hour <= 11)
+				greeting = "Good Morning";
+			else if (hour >= 12 && hour <= 17)
+				greeting = "Good Noon";
+			else
+				greeting = "Good Evening";
+
+			String expected = greeting + " " + userName + "!";
+			String actual = greetingService.greetAsPerTime(userName);
+
+			assertEquals(expected, actual);
+		}, () -> {
+			assertThrows(InvalidUserNameException.class, () -> {
+				greetingService.greetAsPerTime(null);
+			});
+		});
+
 	}
 }
