@@ -1,4 +1,4 @@
-package com.cts.junitdemo.service.test;
+package com.cts.junitdemo.test.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import com.cts.junitdemo.exception.InvalidUserNameException;
@@ -29,6 +30,7 @@ public class GreetingServiceTest {
 
 	@Test
 	@DisplayName("#greet should return 'Hello Vamsy' given 'Vamsy'")
+	@Tag("bussinessLogic")
 	void testGreet1() throws InvalidUserNameException {
 		String userName = "Vamsy";
 		String expected = "Hello Vamsy!";
@@ -38,6 +40,7 @@ public class GreetingServiceTest {
 
 	@Test
 	@DisplayName("#greet should throw InvalidUserNameException given null")
+	@Tag("bussinessLogic")
 	void testGreet2() {
 		String userName = null;
 		assertThrows(InvalidUserNameException.class, () -> {
@@ -47,6 +50,7 @@ public class GreetingServiceTest {
 
 	@Test
 	@DisplayName("#greetAsPerTime should return time based greeting given a user name or should throw InvalidUserNameException")
+	@Tag("bussinessLogic")
 	void testGreetAsPerTime() throws InvalidUserNameException {
 		assertAll(() -> {
 			String userName = "Vamsy";
